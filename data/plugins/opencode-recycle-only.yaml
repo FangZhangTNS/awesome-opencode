@@ -1,0 +1,21 @@
+name: opencode-recycle-only
+repo: https://github.com/FangZhangTNS/opencode-recycle-only
+tagline: Blocks permanent deletes; never moves or rewrites anything
+description: >-
+  Denies permanent delete commands instead of rewriting them. A rewritten command
+  still runs, so the model sees a successful call whose output looks like its own
+  notice and retries; a denial comes back as a failed call with a stated reason, and
+  the model picks a recoverable path itself. Covers rm, rmdir, unlink, del, rd,
+  Remove-Item and its aliases, find -delete and find -exec, xargs rm, inline shells
+  (bash -c, cmd /c, pwsh -Command), language runtimes (python -c, node -e) and
+  Clear-RecycleBin. Command-position matching keeps quoted text, grep patterns and
+  prose from triggering it, and .NET calls carrying SendToRecycleBin pass through.
+  The plugin never touches the filesystem, reads no config and keeps no state.
+scope: [global]
+tags:
+  - safety
+  - delete
+  - recycle-bin
+  - guard
+  - windows
+min_version: 2.0.29
