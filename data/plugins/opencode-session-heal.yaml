@@ -1,0 +1,23 @@
+name: opencode-session-heal
+repo: https://github.com/FangZhangTNS/opencode-session-heal
+tagline: Repairs sessions blocked by caller-bound reasoning items
+description: >-
+  After an API key change, a session whose history holds encrypted reasoning items is
+  rejected by the upstream with "reasoning encrypted_content was not issued to this
+  caller", and every new turn replays the same history. This plugin detects that
+  rejection, marks the session, and on the next start drops only the encrypted
+  continuation fields: metadata.openai on the legacy part table, and
+  state.itemId / state.reasoningEncryptedContent on the v2 session_message table.
+  Reasoning text is kept, no row is deleted, and the heal is idempotent. Swapping the
+  key stays a human decision: the plugin reports the session id and waits for a
+  restart. Each heal writes a row-level undo file that --restore can replay. It edits
+  opencode's sqlite layout directly, so it is limited to the schema it was verified
+  against, and it needs Python 3 on PATH (SESSION_HEAL_PYTHON overrides the probe).
+scope: [global]
+tags:
+  - session
+  - recovery
+  - reasoning
+  - sqlite
+  - troubleshooting
+min_version: 2.0.29
