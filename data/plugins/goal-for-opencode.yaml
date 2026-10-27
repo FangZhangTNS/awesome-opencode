@@ -5,10 +5,11 @@ description: >-
   A goal watchdog for long unattended runs. The agent opens and closes its own goals
   through a goal tool; when a session goes quiet while a goal is still open, the
   plugin sends one prompt back into that session so the model either continues or
-  closes the goal with a stop reason. Nudges are capped at one per session per ten
-  minutes and stop after three consecutive nudges that produce no agent activity. It
-  stays out while a tool call is running, because that return already wakes the agent,
-  and it never expires a goal or notifies a human.
+  closes the goal with a stop reason. Nudges default to one per session per ten
+  minutes, can be stretched per session to as little as one minute or as much as
+  24 hours (or switched off), and stop after three consecutive nudges that produce
+  no agent activity. It stays out while a tool call is running, because that return
+  already wakes the agent, and it never expires a goal or notifies a human.
 scope: [global]
 tags:
   - goals
